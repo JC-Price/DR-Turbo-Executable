@@ -4,18 +4,32 @@ param (
 	[string]$condaEnv = $(throw "-condaEnv is required")
 )
 $root = $PSScriptRoot
+
+# first check if paths are valid
+if (Test-Path -Path $directoryPath) {
+    throw "directoryPath does not exist"
+    exit
+}
+if (Test-Path -Path "$directoryPath\$mainFile") {
+    "mainFile does not exist"
+    throw "mainFile does not exist"
+    exit
+}
+
 Write-Host "Preparing to convert DeuteRater into an executable from this directory: $directoryPath`nAnd this main_gui: $mainFile`n"
 
 # replace items in spec value with appropriate paths and file names
 $specFile = "$PSScriptRoot\template.spec"
+Copy-Item -Path $specFile -Destination "$PSScriptRoot\altered=template.spec"
+$specFileCopy = "$PSScriptRoot\altered=template.spec"
 $mainName = $mainFile -replace '.py', ''
 
 # use the paramters above to adjust spec file
-$text = (Get-Content -Path $specFile -ReadCount 0) -join "`n"
+$text = (Get-Content -Path $specFileCopy -ReadCount 0) -join "`n"
 $text = $text -replace 'MAINFILE', $mainFile
 $text = $text -replace 'FOLDERPATH', $directoryPath
 $text = $text -replace 'MAINNAME', $mainName
-$text | Set-Content -Path $specFile
+$text | Set-Content -Path $specFileCopy
 
 # now we want to use pyinstaller
 # first check if there are existing [$distFolder] or [$buildFolder] directories
@@ -45,7 +59,7 @@ if (Test-Path -Path $distFolder) {
 	# Delete build and dist folders and adjust spec file
 	rm $distFolder -r -force
 	rm $buildFolder -r -force
-	$new = (Get-Content -Path "$root/template.spec")
+	$new = Get-Content -Path $specFileCopy
 	$new | Set-Content -Path "$directoryPath/$mainName.spec"
 
 	# rerun Pyinstaller with the new spec file
@@ -60,8 +74,8 @@ if (Test-Path -Path $distFolder) {
 cd $root
 
 # return DeuteRater.spec back to normal so we can use it again later
-$newtext = (Get-Content -Path $specFile -ReadCount 0) -join "`n"
-$newtext = $newtext -replace '$mainFile', 'MAINFILE'
-$newtext = $newtext -replace '$directoryPath', 'FOLDERPATH'
-$newtext = $newtext -replace '$mainName', 'MAINNAME'
-$newtext | Set-Content -Path $specFile
+# $newtext = (Get-Content -Path $specFile -ReadCount 0) -join "`n"
+# $newtext = $newtext -replace '$mainFile', 'MAINFILE'
+# $newtext = $newtext -replace '$directoryPath', 'FOLDERPATH'
+# $newtext = $newtext -replace '$mainName', 'MAINNAME'
+# $newtext | Set-Content -Path $specFile
