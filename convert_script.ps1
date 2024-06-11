@@ -7,12 +7,11 @@ $root = $PSScriptRoot
 
 # first check if paths are valid
 if (Test-Path -Path $directoryPath) {
-    throw "directoryPath does not exist"
+    $(throw "-directoryPath does not exist")
     exit
 }
 if (Test-Path -Path "$directoryPath\$mainFile") {
-    "mainFile does not exist"
-    throw "mainFile does not exist"
+    $(throw "-mainFile does not exist")
     exit
 }
 
@@ -20,8 +19,8 @@ Write-Host "Preparing to convert DeuteRater into an executable from this directo
 
 # replace items in spec value with appropriate paths and file names
 $specFile = "$PSScriptRoot\template.spec"
-Copy-Item -Path $specFile -Destination "$PSScriptRoot\altered=template.spec"
-$specFileCopy = "$PSScriptRoot\altered=template.spec"
+Copy-Item -Path $specFile -Destination "$PSScriptRoot\altered-template.spec"
+$specFileCopy = "$PSScriptRoot\altered-template.spec"
 $mainName = $mainFile -replace '.py', ''
 
 # use the paramters above to adjust spec file
@@ -37,7 +36,7 @@ $text | Set-Content -Path $specFileCopy
 
 $distFolder = "$directoryPath/dist"
 $buildFolder = "$directoryPath/build"
-"Checking to see if [$distFolder] or [$buildFolder] folders exist"
+"Checking to see if dist or build folders exist"
 if (Test-Path -Path $distFolder) {
 	"Please delete any existing dist or build folders related to pyinstaller`n"
 	# rm $distFolder -r -force
