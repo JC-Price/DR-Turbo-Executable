@@ -6,11 +6,11 @@ block_cipher = None
 
 
 a = Analysis(
-    ['__main__.py'],
-    pathex=['C:\\Users\\Admin\\Documents\\GitHub\\DeuteRater_v6_Executable'],
+    ['C:\\Users\\Admin\\Documents\\GitHub\DeuteRater-dev\\__main__.py'],
+    pathex=['C:\\Users\\admin\\Desktop\\DeuteRater-dev'],
     binaries=[],
-    datas=[('resources\*', 'resources'), ('ui_files\*', 'ui_files')],
-    hiddenimports=[],
+    datas=[('resources\*', 'resources'), ('ui_files\*', 'ui_files'), ('deuterater\*', 'deuterater'), ('utils\*', 'utils'), ('obs\*', 'obs'), ('gui_software\*', 'gui_software'), ('mpl_config\*', 'mpl_config')],
+    hiddenimports=['more_itertools', 'yaml', 'pymzml'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -27,7 +27,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='__main__',
+    name='DeuteRater-v6',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -38,6 +38,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='C:\\Users\\Admin\\Documents\\GitHub\\DeuteRater-dev\\resources\\Logo_64_clean.PNG',
 )
 coll = COLLECT(
     exe,
@@ -47,5 +48,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='__main__',
+    name='DeuteRater-v6',
 )

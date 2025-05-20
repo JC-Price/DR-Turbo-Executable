@@ -13,7 +13,7 @@ def storeInfo(dir_text, main_text, env_text):
         return "missing_data"
     
     try:
-        script_path = os.path.abspath("convert_script.ps1")
+        script_path = os.path.abspath("old_convert_script.ps1")
         p = subprocess.Popen(["powershell.exe", script_path, dir_text, main_text, env_text], stdout=sys.stdout)
         p.communicate()
     except Exception as e:

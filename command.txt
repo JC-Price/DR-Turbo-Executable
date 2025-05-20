@@ -1,0 +1,2 @@
+
+& C:\\Users\\Admin\\Documents\\GitHub\\DeuteRater-dev\\convert_script.ps1 -directoryPath C:\\Users\\Admin\\Documents\\GitHub\\DeuteRater-dev -mainFile __main__.py
