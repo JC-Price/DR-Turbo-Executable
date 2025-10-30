@@ -1,6 +1,12 @@
 # DR-Turbo-Executable - Ben Driggs - 2025
 A tool to help streamline converting DeuteRater into a distributable executable.
 
+## Quick Guide
+1. Copy template.spec, convert_script.ps1, and the PYMZML folder into the DeuteRater directory that you want to convert into an exe.
+2. In your DeuteRater directory, Ensure Conda is working and then activate your DeuteRater environment
+3. Correct paths in template.spec to where your DeuteRater project is located on your machine.
+4. Run convert_script.ps1 (with parameters specified in command.txt)
+
 ## Instructions
 I typically ran the convert_script.ps1 in a command prompt window with the appropriate DeuteRater environment activated. 
 If you don't have Anaconda connected to your command prompt, you'll need to initalize it before you can activate any environments.
